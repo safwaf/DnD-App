@@ -1,0 +1,210 @@
+<HTML>
+<SCRIPT>
+//this section holds variables we will keep for saving the character
+//all integers are initialized to 0 for organization, as such 0s are treated as null values
+var character_class = 0; //number between 1 and 12 signifies the chosen class
+var character_race = 0;
+var character_background=0;
+//this is the end of the saved character data
+
+//this section holds arrays filled with data for various parts of the process
+//they are kept separate so that we can easily add to them later
+var classdescriptions = new Array();	//descriptions of classes to display while player is selecting. Taken from DnD 5th Edition Wiki 
+classdescriptions[0]= "";	//we should not display a description if the class is not selected
+classdescriptions[1]= "A fierce warrior of a primitive background who can enter a battle rage";
+classdescriptions[2]= "An inspiring magician whose power echoes the music of creation";
+classdescriptions[3]= "A priestly champion who wields divine magic in service of a higher power";
+classdescriptions[4]= "A priest of the Old Faith, wielding the powers of nature— moonlight and plant growth, fire and lightning—and adopting animal forms";
+classdescriptions[5]= "A master of martial combat, skilled with a variety of weapons and armours";
+classdescriptions[6]= "A master of martial arts, skilled with fighting hands and martial monk weapons";
+classdescriptions[7]= "A holy warrior bound to a sacred oath";
+classdescriptions[8]= "A master of ranged combat, one with nature";
+classdescriptions[9]= "A scoundrel who uses stealth and trickery to overcome obstacles and enemies";
+classdescriptions[10]= "A spellcaster who draws on inherent magic from a gift or bloodline";
+classdescriptions[11]= "A wielder of magic that is derived from a bargain with an extraplanar entity";
+classdescriptions[12]= "A scholarly magic-user capable of manipulating the structures of reality";
+
+
+var classicons = new Array();	//icon file locations for the classes, courtesy of Wizards of the Coast. Not free use
+classicons[0]="";	//do not display an icon if there is no class selected
+classicons[1]="Resources\Images\DnD5E_ClassSymb_Barbarian.tif";	
+classicons[2]="Resources\Images\DnD5E_ClassSymb_Bard.tif";
+classicons[3]="Resources\Images\DnD5E_ClassSymb_Cleric.tif";
+classicons[4]="Resources\Images\DnD5E_ClassSymb_Druid.tif";
+classicons[5]="Resources\Images\DnD5E_ClassSymb_Fighter.tif";
+classicons[6]="Resources\Images\DnD5E_ClassSymb_Monk.tif";
+classicons[7]="Resources\Images\DnD5E_ClassSymb_Paladin.tif";
+classicons[8]="Resources\Images\DnD5E_ClassSymb_Ranger.tif";
+classicons[9]="Resources\Images\DnD5E_ClassSymb_Rogue.tif";
+classicons[10]="Resources\Images\DnD5E_ClassSymb_Sorcerer.tif";
+classicons[11]="Resources\Images\DnD5E_ClassSymb_Warlock.tif";
+classicons[11]="Resources\Images\DnD5E_ClassSymb_Wizard.tif";
+
+//this is the end of the array section
+
+
+function classSelected()
+{
+character_class = document.getElementById("classselect").value;
+document.getElementById("classicon").src = classicons[character_class];
+document.getElementById("classdescription").innerHTML = classdescriptions[character_class];
+}
+
+function raceSelected()
+{
+character_class = document.getElementById("classselect").value;
+document.getElementById("classicon").src = classicons[character_class];
+document.getElementById("classdescription").innerHTML = classdescriptions[character_class];
+}
+
+
+//this section details code for navigating and displaying the functional pages
+
+var totaltabs = 9;
+var activetab = 1;
+
+function continueButton()
+{
+activetab+=1;
+setActiveTab();
+}
+
+function backButton()
+{
+activetab-=1;
+setActiveTab();
+}
+
+function setActiveTab()
+{
+var i;
+for (i=1;i<=totaltabs;i++)
+{
+document.getElementById("page"+i).style.display="none";
+if (i<activetab)
+{
+document.getElementById("step"+i).style.backgroundColor="green";
+}
+else
+{
+document.getElementById("step"+i).style.backgroundColor="gray";
+}
+}
+document.getElementById("page"+activetab).style.display="block";
+}
+
+
+function setupCharacterCreator()
+{
+setActiveTab();
+}
+
+</SCRIPT>
+<BODY onload="setupCharacterCreator()">
+<p id="step1">Step 1: Class</p>
+<div id="page1">
+Please select a class for your new character<br>
+<select id="classselect" onchange="classSelected()">
+<option value="1">Barbarian</option>
+<option value="2">Bard</option>
+<option value="3">Cleric</option>
+<option value="4">Druid</option>
+<option value="5">Fighter</option>
+<option value="6">Monk</option>
+<option value="7">Paladin</option>
+<option value="8">Ranger</option>
+<option value="9">Rogue</option>
+<option value="10">Sorceror</option>
+<option value="11">Warlock</option>
+<option value="12">Wizard</option>
+</select>
+<br>
+<img id="classicon" src="">
+<br>
+<p id="classdescription"></p>
+<button onclick="continueButton()">Continue</button>
+</div>
+
+<p id="step2">Step 2: Optional Archetype Selection</p>
+<div id="page2" style="display:none">
+Not currently supported<br>
+<button onclick="backButton()">Back</button>
+<button onclick="continueButton()">Continue</button>
+</div>
+
+<p id="step3">Step 3: Race and Background</p>
+<div id="page3" style="display:none">
+Please select a race and background for your character<br>
+<select id="raceselect" onchange="raceSelected()">
+<option value="1" style="font-weight:bold">Dragonborn</option>
+<optgroup label="Dwarf">
+<option value="2">Hill Dwarf</option>
+<option value="3">Mountain Dwarf</option>
+</optgroup>
+<optgroup label="Elf">
+<option value="4">Drow</option>
+<option value="5">High Elf</option>
+<option value="6">Wood Elf</option>
+</optgroup>
+<optgroup label="Gnome"> 
+<option value="7">Forest Gnome</option>
+<option value="8">Rock Gnome</option>
+</optgroup>
+<option value="9" style="font-weight:bold">Half-Elf</option>
+<option value="10" style="font-weight:bold">Half-Orc</option>
+<optgroup label="Halfling">
+<option value="11">Stout Halfling</option>
+<option value="12">Lightfoot Halfling</option>
+</optgroup>
+<option value="13" style="font-weight:bold">Human</option>
+<option value="14" style="font-weight:bold">Tiefling</option>
+</select>
+
+<button onclick="backButton()">Back</button>
+<button onclick="continueButton()">Continue</button>
+</div>
+
+<p id="step4">Step 2: Optional Archetype Selection</p>
+<div id="page4" style="display:none">
+Not currently supported
+<button onclick="backButton()">Back</button>
+<button onclick="continueButton()">Continue</button>
+</div>
+
+<p id="step5">Step 2: Optional Archetype Selection</p>
+<div id="page5" style="display:none">
+Not currently supported
+<button onclick="backButton()">Back</button>
+<button onclick="continueButton()">Continue</button>
+</div>
+
+<p id="step6">Step 2: Optional Archetype Selection</p>
+<div id="page6" style="display:none">
+Not currently supported
+<button onclick="backButton()">Back</button>
+<button onclick="continueButton()">Continue</button>
+</div>
+
+<p id="step7">Step 2: Optional Archetype Selection</p>
+<div id="page7" style="display:none">
+Not currently supported
+<button onclick="backButton()">Back</button>
+<button onclick="continueButton()">Continue</button>
+</div>
+
+<p id="step8">Step 2: Optional Archetype Selection</p>
+<div id="page8" style="display:none">
+Not currently supported
+<button onclick="backButton()">Back</button>
+<button onclick="continueButton()">Continue</button>
+</div>
+
+<p id="step9">Step 9: Backstory and Details</p>
+<div id="page9" style="display:none">
+
+
+<button onclick="backButton()">Back</button>
+</div>
+</BODY>
+
+</HTML>
