@@ -1,0 +1,45 @@
+screen 1: class
+class selector
+brief description of selected class and perhaps an image
+continue/back buttons
+
+screen 2(not in beta): archetype suggestions
+3 suggestions of archetypal characters for that class
+continue/back buttons
+
+screen 3: race and background
+race selector
+subrace selector (if applicable)
+height/weight display
+background selector
+continue/back buttons
+
+screen 4(not in beta): ability method
+buttons for point buy, standard set, and rolling
+
+screen 5a: standard set
+buttons to shift the numbers around for ability scores
+display modifiers
+continue/back buttons
+
+screen 6: Skills
+appropriate number of skill selectors
+display modifiers
+continue/back buttons
+
+screen 7: equipment
+selector for weapon
+selector for artisan tools
+continue/back buttons
+
+screen 8: spells
+spell selectors for the appropriate number of spells
+display number of spell slots
+continue/back buttons
+
+screen 9: Backstory
+Name input
+Age input
+Alignment selector
+Gender Selector
+Language selector

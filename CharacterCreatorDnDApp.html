@@ -1,10 +1,15 @@
 <HTML>
 <SCRIPT>
 //this section holds variables we will keep for saving the character
-//all integers are initialized to 0 for organization, as such 0s are treated as null values
+//all array-indicator integers (class, race, etc) are initialized to 0 for organization, as such 0s are treated as null values
 var character_class = 0; //number between 1 and 12 signifies the chosen class
-var character_race = 0;
+var character_race = 0;	//number between 1 and 14 signifies the chosen race
 var character_background=0;
+
+//ability scores
+var character_ability_
+
+var 
 //this is the end of the saved character data
 
 //this section holds arrays filled with data for various parts of the process
@@ -40,6 +45,16 @@ classicons[10]="Resources\Images\DnD5E_ClassSymb_Sorcerer.tif";
 classicons[11]="Resources\Images\DnD5E_ClassSymb_Warlock.tif";
 classicons[11]="Resources\Images\DnD5E_ClassSymb_Wizard.tif";
 
+
+var racedescriptions = new Array();	//descriptions of races to display when player is selecting. Self-written based on descriptions in the PHB
+racedescriptions[0] = "";	//do not display a description if there is no race selected
+racedescriptions[1] = "Dragonborn are a fearsome humanoid race created by the powerful draconic gods";
+racedescriptions[1] = "Hill Dwarves have keen senses, deep intuition and remarkable resilience. They tend to be short even by dwarven standards";
+racedescriptions[1] = "Mountain dwarves are strong, hardy and accustomed to a difficult life in rugged terrain. They are taller and more lightly coloured than 
+
+
+var racebonusdescriptions = new Array();	//description of the various bonuses races recieve
+
 //this is the end of the array section
 
 
@@ -52,7 +67,7 @@ document.getElementById("classdescription").innerHTML = classdescriptions[charac
 
 function raceSelected()
 {
-character_class = document.getElementById("classselect").value;
+character_race = document.getElementById("classselect").value;
 document.getElementById("classicon").src = classicons[character_class];
 document.getElementById("classdescription").innerHTML = classdescriptions[character_class];
 }
@@ -159,6 +174,9 @@ Please select a race and background for your character<br>
 <option value="13" style="font-weight:bold">Human</option>
 <option value="14" style="font-weight:bold">Tiefling</option>
 </select>
+<br>
+<p id="racedescription"></p><br>
+<p id="racestats"></p><br>
 
 <button onclick="backButton()">Back</button>
 <button onclick="continueButton()">Continue</button>
