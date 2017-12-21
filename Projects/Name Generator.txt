@@ -1,0 +1,7 @@
+Name Generator program
+
+The name generator is a function that will accept an integer (signifying which race the character is) and a boolean (signifying the gender of the character)
+
+Using the name tables provided in the PHB, the function will randomly select an appropriate name for that gender and race
+
+Will be incorporated into a future version of the character creator
