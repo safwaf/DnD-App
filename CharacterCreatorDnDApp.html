@@ -1,16 +1,76 @@
 <HTML>
 <SCRIPT>
+/*GUIDING PRINCIPLES
+any variable that needs to be saved to the character file should be prefaced with character_
+all tables should be null at 0 and then alphabetized, as things are almost always presented alphabetically in the PHB
+when possible, the app should provide roleplaying information more prominently than statistical data
+choices should be presented in a logical order, so that the player can make informed decisions
+skill modifiers are always calculated on the fly based on ability scores and proficiencies
+
+
+*/
+
 //this section holds variables we will keep for saving the character
 //all array-indicator integers (class, race, etc) are initialized to 0 for organization, as such 0s are treated as null values
 var character_class = 0; //number between 1 and 12 signifies the chosen class
 var character_race = 0;	//number between 1 and 14 signifies the chosen race
-var character_background=0;
+var character_background=0;	//number between 1 and 13 signifies chosen background
 
 //ability scores
-var character_ability_
+var character_ability_charisma = 0;
+var character_ability_constitution = 0;
+var character_ability_dexterity = 0;
+var character_ability_intelligence = 0;
+var character_ability_strength = 0;
+var character_ability_wisdom = 0;
 
-var 
+//skill modifiers
+//we are not using this model any more, build get functions for skill modifiers instead
+/*var character_skill_acrobatics = 0;
+var character_skill_animalhandling = 0;
+var character_skill_arcana = 0;
+var character_skill_athletics = 0;
+var character_skill_deception = 0;
+var character_skill_history = 0;
+var character_skill_insight = 0;
+var character_skill_intimidation = 0;
+var character_skill_investigation = 0;
+var character_skill_medicine = 0;
+var character_skill_nature = 0;
+var character_skill_ = 0;
+var character_skill_acrobatics = 0;
+var character_skill_acrobatics = 0;
+var character_skill_acrobatics = 0;
+var character_skill_acrobatics = 0;
+var character_skill_acrobatics = 0;
+var character_skill_acrobatics = 0;*/
+
+var character_proficiency_modifier = 2;	//for now, proficiency is always +2, since the app only creates level 1 characters
+
+var character_background_proficiency_one = 0;	//corresponds to the table of skills to designate a proficiency
+var character_background_proficiency_two = 0;	//each background grants two proficiencies. zero indicates no proficiency
+
+//what languages does the character know? Generally set in stone after character creation
+//for now we do not allow exotic languages
+var character_languages = new Array();
+character_languages[0]=true;	//Common. All characters know common unless they have abnormally low intelligence
+character_languages[1]=false;	//Dwarvish
+character_languages[2]=false;	//Elvish
+character_languages[3]=false;	//Giant
+character_languages[4]=false;	//Gnomish
+character_languages[5]=false;	//Goblin
+character_languages[6]=false;	//Halfling
+character_languages[7]=false;	//Orc
 //this is the end of the saved character data
+
+//racial ability modifiers. these are not saved, as once the character is created they become permanent
+var race_charisma = 0;
+var race_constitution = 0;
+var race_dexterity = 0;
+var race_intelligence = 0;
+var race_strength = 0;
+var race_wisdom = 0;
+
 
 //this section holds arrays filled with data for various parts of the process
 //they are kept separate so that we can easily add to them later
@@ -53,11 +113,9 @@ racedescriptions[1] = "Hill Dwarves have keen senses, deep intuition and remarka
 racedescriptions[1] = "Mountain dwarves are strong, hardy and accustomed to a difficult life in rugged terrain. They are taller and more lightly coloured than 
 
 
-var racebonusdescriptions = new Array();	//description of the various bonuses races recieve
-
 //this is the end of the array section
 
-
+//these functions are used to display table data during character creation
 function classSelected()
 {
 character_class = document.getElementById("classselect").value;
@@ -67,11 +125,103 @@ document.getElementById("classdescription").innerHTML = classdescriptions[charac
 
 function raceSelected()
 {
-character_race = document.getElementById("classselect").value;
-document.getElementById("classicon").src = classicons[character_class];
-document.getElementById("classdescription").innerHTML = classdescriptions[character_class];
+var paragraph = "";	//this is the paragraph we will build describing the race and the various modifiers and bonuses they get
+
+resetRaceModifiers();	//set everything to zero/null
+
+character_race = document.getElementById("raceselect").value;
+
+
+raceparagraph = paragraph + racedescriptions[character_race] + "<br>";	//pull from the table of brief race descritpions
+
+switch (character_race)
+{
+case 0:		//null character, everything has already been set to zero, leave it alone
+break;
+
+case 1:		//Dragonborn
+race_charisma=1;
+race_strength=2;
+break;
+
+case 2:		//Hill Dwarf
+break;
+
+case 3:		//Mountain Dwarf
+break;
+
+case 4:		//Drow
+break;
+
+case 5:		//High Elf
+break;
+
+case 6:		//Wood Elf
+break;
+
+case 7:		//Forest Gnome
+race_
+break;
+
+case 8:		//Rock Gnome
+break;
+
+case 9:		//Lightfoot Halfling
+break;
+
+case 10:	//Stout Halfling
+break;
+
+case 11:	//Half-Elf
+break;
+
+case 12:	//Half-Orc
+break;
+
+case 13:	//Human
+break;
+
+case 14:	//Tiefling
+break;
+}
+document.getElementById("racedescription").innerHTML = raceparagraph;
 }
 
+function resetRaceModifiers()
+{
+//this function resets all the race modifiers for the current character
+race_charisma = 0;
+race_constitution = 0;
+race_dexterity = 0;
+race_intelligence = 0;
+race_strength = 0;
+race_wisdom = 0;
+
+resetLanguages();
+}
+
+function resetLanguages()	//resets languages to default
+{
+character_languages[0]=true;	//Common. All characters know common unless they have abnormally low intelligence
+character_languages[1]=false;	//Dwarvish
+character_languages[2]=false;	//Elvish
+character_languages[3]=false;	//Giant
+character_languages[4]=false;	//Gnomish
+character_languages[5]=false;	//Goblin
+character_languages[6]=false;	//Halfling
+character_languages[7]=false;	//Orc
+}
+
+function backgroundSelected()
+{
+character_background = document.getElementById("backgroundselect").value;
+document.getElementById("backgrounddescription").innerHTML = backgrounddescriptions[character_background];
+}
+
+function getSkillModifier(skillnum)
+{
+//this is a get function for skill modifiers. skillnum refers to the skill in question in the skill table (alphabetical)
+}
 
 //this section details code for navigating and displaying the functional pages
 
@@ -108,6 +258,10 @@ document.getElementById("step"+i).style.backgroundColor="gray";
 document.getElementById("page"+activetab).style.display="block";
 }
 
+function rollDice(dsize,dnumber)	//function that rolls dnumber dice of size dsize. Used in a wide variety of places for character generation, particularly randomization
+{
+
+}
 
 function setupCharacterCreator()
 {
@@ -147,7 +301,7 @@ Not currently supported<br>
 <button onclick="continueButton()">Continue</button>
 </div>
 
-<p id="step3">Step 3: Race and Background</p>
+<p id="step3">Step 3: Race</p>
 <div id="page3" style="display:none">
 Please select a race and background for your character<br>
 <select id="raceselect" onchange="raceSelected()">
@@ -165,26 +319,40 @@ Please select a race and background for your character<br>
 <option value="7">Forest Gnome</option>
 <option value="8">Rock Gnome</option>
 </optgroup>
-<option value="9" style="font-weight:bold">Half-Elf</option>
-<option value="10" style="font-weight:bold">Half-Orc</option>
 <optgroup label="Halfling">
-<option value="11">Stout Halfling</option>
-<option value="12">Lightfoot Halfling</option>
+<option value="9">Lightfoot Halfling</option>
+<option value="10">Stout Halfling</option>
 </optgroup>
+<option value="11" style="font-weight:bold">Half-Elf</option>
+<option value="12" style="font-weight:bold">Half-Orc</option>
 <option value="13" style="font-weight:bold">Human</option>
 <option value="14" style="font-weight:bold">Tiefling</option>
 </select>
 <br>
-<p id="racedescription"></p><br>
-<p id="racestats"></p><br>
-
+<p id="raceparagraph"></p><br>
 <button onclick="backButton()">Back</button>
 <button onclick="continueButton()">Continue</button>
 </div>
 
-<p id="step4">Step 2: Optional Archetype Selection</p>
+<p id="step4">Step 4: Background</p>
 <div id="page4" style="display:none">
-Not currently supported
+<select id="backgroundselect" onchange="backgroundSelected()">
+<option value="1">Acolyte</option>
+<option value="2">Charlatan</option>
+<option value="3">Criminal</option>
+<option value="4">Entertainer</option>
+<option value="5">Folk Hero</option>
+<option value="6">Guild Artisan</option>
+<option value="7">Hermit</option>
+<option value="8">Noble</option>
+<option value="9">Outlander</option>
+<option value="10">Sage</option>
+<option value="11">Sailor</option>
+<option value="12">Soldier</option>
+<option value="13">Urchin</option>
+</select>
+<br>
+<p id="backgrounddescription"></p><br>
 <button onclick="backButton()">Back</button>
 <button onclick="continueButton()">Continue</button>
 </div>
